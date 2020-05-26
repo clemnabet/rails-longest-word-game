@@ -1,0 +1,28 @@
+<div class="container game">
+  <h1 class="text-center">Result</h1>
+
+  <ul class="m-4 justify-content-center list-group list-group-horizontal">
+    <% @result[:letters].each do |letter| %>
+      <% if @result[:attempt].upcase.split("").include?(letter) == true %>
+        <li class="list-group-item used"><%= letter.capitalize %></li>
+      <% else %>
+        <li class="list-group-item"><%= letter.capitalize %></li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <% if @result[:resolve] == 0 %>
+      <p class="text-center">Sorry but <strong><%= @result[:attempt].upcase%></strong> can't be built out of <%= @result[:letters].join(", ")%>.</p>
+  <% elsif @result[:resolve] == 1 %>
+      <p class="text-center">Sorry but <strong><%= @result[:attempt].upcase%></strong> does not seem to be a valid English word...Your score is <strong><%= @result[:score]%></strong> points</p>
+  <% elsif @result[:resolve] == 2 %>
+      <p class="text-center"><strong>Congratulations!</strong> <span><%= @result[:attempt].upcase %></span> is a valid English word! Your score is <strong><%= @result[:score]%></strong> points</p>
+  <% else %>
+      <p class="text-center">You didn't typed any word.</p>
+  <% end %>
+
+  <%= button_to "Play again", "/new",
+  id: "new-game",
+  class: "d-inline-block btn btn-primary",
+  method: :get %>
+</div>
